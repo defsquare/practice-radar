@@ -14,12 +14,12 @@
     "cardBackground": "#fff",
     "quadrantColors": ["#1DB954", "#1ED760", "#B49BC8", "#509BF5"]
   },
-  "adoptionLevels": [
-    { "value": 0, "label": "N/A", "color": "#EEEEEE", "textColor": "#AAAAAA" },
-    { "value": 1, "label": "Exploring", "color": "#CCCCCC", "textColor": "#666" },
-    { "value": 2, "label": "Adopting", "color": "#1ED760", "textColor": "#fff" },
-    { "value": 3, "label": "Embedded", "color": "#1DB954", "textColor": "#fff" }
-  ],
+  "adoptionLevels": {
+    "na":          { "color": "#EEEEEE", "textColor": "#AAAAAA" },
+    "notUsed":     { "color": "#CCCCCC", "textColor": "#666" },
+    "emergent":    { "color": "#1ED760", "textColor": "#fff" },
+    "intentional": { "color": "#1DB954", "textColor": "#fff" }
+  },
   "sections": [
     {
       "title": "Autonomy",

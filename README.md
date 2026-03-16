@@ -45,7 +45,7 @@ make DATA=examples/netflix.json
 | `logo` | URL to a logo image (leave empty to hide) |
 | `teams` | Array of team names (column headers) |
 | `theme` | Colors for background, text, accent, borders, quadrants, etc. |
-| `adoptionLevels` | Scoring scale with value, label, color, and text color |
+| `adoptionLevels` | Colors for each fixed level (`na`, `notUsed`, `emergent`, `intentional`) |
 | `sections` | Practice groups (become radar quadrants) |
 | `notes` | Optional notes displayed at the bottom |
 
@@ -58,14 +58,14 @@ Each practice has:
 
 ### Adoption Levels
 
-Default scale (customizable):
+The four levels are fixed — only their `color` and `textColor` are customizable:
 
-| Value | Label | Meaning |
-|---|---|---|
-| 0 | N/A | Not applicable to this team |
-| 1 | Not Used | Known but not adopted |
-| 2 | Emergent | Partially adopted |
-| 3 | Intentional | Fully adopted |
+| Value | Key | Label | Meaning |
+|---|---|---|---|
+| 0 | `na` | N/A | Not applicable to this team |
+| 1 | `notUsed` | Not Used | Known but not adopted |
+| 2 | `emergent` | Emergent | Partially adopted |
+| 3 | `intentional` | Intentional | Fully adopted |
 
 ## How It Works
 

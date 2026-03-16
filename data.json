@@ -14,12 +14,12 @@
     "cardBackground": "#fff",
     "quadrantColors": ["#4A7C59", "#C4956A", "#7B6B8D", "#8B6F5C"]
   },
-  "adoptionLevels": [
-    { "value": 0, "label": "N/A", "color": "#EEEBE6", "textColor": "#B8AFA6" },
-    { "value": 1, "label": "Not Used", "color": "#D4C9B8", "textColor": "#6B5B52" },
-    { "value": 2, "label": "Emergent", "color": "#C4956A", "textColor": "#fff" },
-    { "value": 3, "label": "Intentional", "color": "#4A7C59", "textColor": "#fff" }
-  ],
+  "adoptionLevels": {
+    "na":          { "color": "#EEEBE6", "textColor": "#B8AFA6" },
+    "notUsed":     { "color": "#D4C9B8", "textColor": "#6B5B52" },
+    "emergent":    { "color": "#C4956A", "textColor": "#fff" },
+    "intentional": { "color": "#4A7C59", "textColor": "#fff" }
+  },
   "sections": [
     {
       "title": "Engineering",

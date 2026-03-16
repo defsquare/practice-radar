@@ -14,12 +14,12 @@
     "cardBackground": "#fff",
     "quadrantColors": ["#D97706", "#92400E", "#6B7280", "#4A7C59"]
   },
-  "adoptionLevels": [
-    { "value": 0, "label": "N/A", "color": "#F0EDE6", "textColor": "#B0A898" },
-    { "value": 1, "label": "Planned", "color": "#D5CFC3", "textColor": "#6B6252" },
-    { "value": 2, "label": "In Progress", "color": "#D97706", "textColor": "#fff" },
-    { "value": 3, "label": "Established", "color": "#92400E", "textColor": "#fff" }
-  ],
+  "adoptionLevels": {
+    "na":          { "color": "#F0EDE6", "textColor": "#B0A898" },
+    "notUsed":     { "color": "#D5CFC3", "textColor": "#6B6252" },
+    "emergent":    { "color": "#D97706", "textColor": "#fff" },
+    "intentional": { "color": "#92400E", "textColor": "#fff" }
+  },
   "sections": [
     {
       "title": "AI Safety",

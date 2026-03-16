@@ -511,10 +511,18 @@ const DATA = /** @DATA@ */;
     root.setProperty('--card-bg', t.cardBackground);
 })();
 
-// Generate dynamic score CSS classes from adoptionLevels
+// Fixed adoption levels — only colors are customizable via data
+const LEVELS = [
+    { value: 0, label: 'N/A',         key: 'na',          ...LEVELS.na },
+    { value: 1, label: 'Not Used',     key: 'notUsed',     ...LEVELS.notUsed },
+    { value: 2, label: 'Emergent',     key: 'emergent',    ...LEVELS.emergent },
+    { value: 3, label: 'Intentional',  key: 'intentional', ...LEVELS.intentional }
+];
+
+// Generate dynamic score CSS classes
 (function generateScoreStyles() {
     const style = document.createElement('style');
-    style.textContent = DATA.adoptionLevels.map(l =>
+    style.textContent = LEVELS.map(l =>
         `.s${l.value} { background: ${l.color}; color: ${l.textColor}; }`
     ).join('\n');
     document.head.appendChild(style);
@@ -522,7 +530,7 @@ const DATA = /** @DATA@ */;
 
 // Build adoption level lookup
 const levelByValue = {};
-DATA.adoptionLevels.forEach(l => { levelByValue[l.value] = l; });
+LEVELS.forEach(l => { levelByValue[l.value] = l; });
 
 // Set title, subtitle, logo
 document.getElementById('main-title').textContent = DATA.title;
@@ -538,7 +546,7 @@ const sections = DATA.sections;
 
 // Global counters
 const totalCells = {};
-DATA.adoptionLevels.forEach(l => { totalCells[l.value] = 0; });
+LEVELS.forEach(l => { totalCells[l.value] = 0; });
 
 sections.forEach(section => {
     section.practices.forEach(p => {
@@ -547,12 +555,12 @@ sections.forEach(section => {
 });
 
 // Stats
-const sortedLevels = DATA.adoptionLevels.slice().sort((a, b) => b.value - a.value);
+const sortedLevels = LEVELS.slice().sort((a, b) => b.value - a.value);
 const applicable = sortedLevels
     .filter(l => l.value > 0)
     .reduce((sum, l) => sum + totalCells[l.value], 0);
 
-const maxLevel = Math.max(...DATA.adoptionLevels.map(l => l.value));
+const maxLevel = Math.max(...LEVELS.map(l => l.value));
 
 const statsDiv = document.getElementById('stats');
 statsDiv.innerHTML = sortedLevels.map(l =>
@@ -562,7 +570,7 @@ statsDiv.innerHTML = sortedLevels.map(l =>
 // Team stats
 const teamStats = teams.map((team, ti) => {
     const counts = {};
-    DATA.adoptionLevels.forEach(l => { counts[l.value] = 0; });
+    LEVELS.forEach(l => { counts[l.value] = 0; });
     sections.forEach(section => {
         section.practices.forEach(p => {
             counts[p.levels[ti]]++;
@@ -587,7 +595,7 @@ function buildRadar(container, teamIdx) {
     const size = 750;
     const cx = size / 2, cy = size / 2;
     const maxR = size / 2 - 45;
-    const numRings = DATA.adoptionLevels.length;
+    const numRings = LEVELS.length;
     const ringR = [];
     for (let i = 0; i < numRings; i++) {
         ringR.push(maxR * (0.52 + (i / (numRings - 1)) * 0.44));
@@ -654,7 +662,7 @@ function buildRadar(container, teamIdx) {
 
         // Group practices by ring for this team
         const byRing = {};
-        DATA.adoptionLevels.forEach(l => { byRing[l.value] = []; });
+        LEVELS.forEach(l => { byRing[l.value] = []; });
         section.practices.forEach(p => {
             byRing[p.levels[teamIdx]].push(p.name);
         });
@@ -779,7 +787,7 @@ function buildRadar(container, teamIdx) {
         const ul = document.createElement('ul');
 
         const byRing = {};
-        DATA.adoptionLevels.forEach(l => { byRing[l.value] = []; });
+        LEVELS.forEach(l => { byRing[l.value] = []; });
         q.items.forEach(item => byRing[item.score].push(item));
 
         sortedLevels.forEach(level => {
@@ -851,7 +859,7 @@ const layersDiv = document.getElementById('layers');
 
 sections.forEach((section, si) => {
     let secCounts = {};
-    DATA.adoptionLevels.forEach(l => { secCounts[l.value] = 0; });
+    LEVELS.forEach(l => { secCounts[l.value] = 0; });
     section.practices.forEach(p => {
         p.levels.forEach(s => { secCounts[s]++; });
     });

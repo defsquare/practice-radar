@@ -14,12 +14,12 @@
     "cardBackground": "#2A2A2A",
     "quadrantColors": ["#E50914", "#B81D24", "#831010", "#564D4D"]
   },
-  "adoptionLevels": [
-    { "value": 0, "label": "N/A", "color": "#2A2A2A", "textColor": "#555" },
-    { "value": 1, "label": "Not Used", "color": "#444", "textColor": "#999" },
-    { "value": 2, "label": "Emergent", "color": "#B81D24", "textColor": "#fff" },
-    { "value": 3, "label": "Intentional", "color": "#E50914", "textColor": "#fff" }
-  ],
+  "adoptionLevels": {
+    "na":          { "color": "#2A2A2A", "textColor": "#555" },
+    "notUsed":     { "color": "#444", "textColor": "#999" },
+    "emergent":    { "color": "#B81D24", "textColor": "#fff" },
+    "intentional": { "color": "#E50914", "textColor": "#fff" }
+  },
   "sections": [
     {
       "title": "Resilience",
