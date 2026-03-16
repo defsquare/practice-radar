@@ -1,0 +1,74 @@
+{
+  "title": "Engineering Practices Radar",
+  "subtitle": "Tracking adoption of engineering standards across streaming platform teams",
+  "logo": "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
+  "teams": ["STREAMING", "CONTENT", "PLATFORM", "DATA", "STUDIO"],
+  "theme": {
+    "background": "#1A1A1A",
+    "text": "#E0E0E0",
+    "heading": "#FFFFFF",
+    "accent": "#E50914",
+    "muted": "#808080",
+    "border": "#333333",
+    "surface": "#252525",
+    "cardBackground": "#2A2A2A",
+    "quadrantColors": ["#E50914", "#B81D24", "#831010", "#564D4D"]
+  },
+  "adoptionLevels": [
+    { "value": 0, "label": "N/A", "color": "#2A2A2A", "textColor": "#555" },
+    { "value": 1, "label": "Not Used", "color": "#444", "textColor": "#999" },
+    { "value": 2, "label": "Emergent", "color": "#B81D24", "textColor": "#fff" },
+    { "value": 3, "label": "Intentional", "color": "#E50914", "textColor": "#fff" }
+  ],
+  "sections": [
+    {
+      "title": "Resilience",
+      "practices": [
+        { "name": "Chaos Engineering", "link": "", "levels": [3, 2, 3, 2, 1] },
+        { "name": "Circuit Breaker", "link": "", "levels": [3, 3, 3, 2, 2] },
+        { "name": "Bulkhead Isolation", "link": "", "levels": [3, 2, 3, 1, 1] },
+        { "name": "Graceful Degradation", "link": "", "levels": [3, 3, 3, 2, 2] },
+        { "name": "Timeout & Retry Policies", "link": "", "levels": [3, 3, 3, 3, 2] }
+      ]
+    },
+    {
+      "title": "Delivery",
+      "practices": [
+        { "name": "Canary Deployments", "link": "", "levels": [3, 3, 3, 3, 2] },
+        { "name": "Feature Flags", "link": "", "levels": [3, 3, 3, 2, 3] },
+        { "name": "Trunk Based Development", "link": "", "levels": [3, 2, 3, 3, 2] },
+        { "name": "Automated Rollback", "link": "", "levels": [3, 2, 3, 2, 1] },
+        { "name": "Immutable Infrastructure", "link": "", "levels": [3, 3, 3, 3, 2] }
+      ]
+    },
+    {
+      "title": "Observability",
+      "practices": [
+        { "name": "Distributed Tracing", "link": "", "levels": [3, 2, 3, 3, 1] },
+        { "name": "Real-Time Dashboards", "link": "", "levels": [3, 3, 3, 3, 2] },
+        { "name": "Anomaly Detection", "link": "", "levels": [2, 2, 3, 3, 1] },
+        { "name": "SLO-Based Alerting", "link": "", "levels": [3, 2, 3, 2, 1] },
+        { "name": "Log Aggregation", "link": "", "levels": [3, 3, 3, 3, 3] }
+      ]
+    },
+    {
+      "title": "Culture",
+      "practices": [
+        { "name": "Freedom & Responsibility", "link": "", "levels": [3, 3, 3, 3, 3] },
+        { "name": "Blameless Post-Mortems", "link": "", "levels": [3, 3, 3, 3, 2] },
+        { "name": "Full Cycle Developers", "link": "", "levels": [3, 2, 3, 2, 1] },
+        { "name": "Documentation as Code", "link": "", "levels": [2, 2, 3, 3, 2] },
+        { "name": "A/B Testing Culture", "link": "", "levels": [3, 3, 2, 3, 2] }
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "text": "Practices under evaluation:",
+      "items": [
+        { "name": "eBPF-Based Observability", "link": "" },
+        { "name": "Service Mesh Adoption", "link": "" }
+      ]
+    }
+  ]
+}

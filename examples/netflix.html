@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practices Radar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 2.5rem;
+            flex: 1;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .logo-img {
+            height: 80px;
+            width: auto;
+        }
+        h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+            color: var(--heading);
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.04em;
+        }
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: var(--accent);
+            margin: 0 auto 2.5rem auto;
+        }
+
+        /* Section titles */
+        .section-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            background: var(--surface);
+            border-left: 2px solid var(--accent);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text);
+            flex-shrink: 0;
+        }
+        h2.section-heading {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.15rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin: 3rem 0 1.2rem 0;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--heading);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+            table-layout: fixed;
+        }
+        th {
+            background: var(--surface);
+            padding: 0.6rem 0.4rem;
+            font-size: 0.65rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-align: center;
+            border: 1px solid var(--border);
+            color: #6B5B52;
+        }
+        th:first-child {
+            text-align: left;
+            width: 320px;
+            padding-left: 1rem;
+        }
+        td {
+            padding: 0.5rem 0.4rem;
+            font-size: 0.8rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            font-weight: 500;
+        }
+        td:first-child {
+            text-align: left;
+            padding-left: 1rem;
+            font-weight: 400;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 0 0 1rem 0;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 1.2rem 1.8rem;
+            text-align: center;
+            min-width: 130px;
+        }
+        .stat-value {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-top: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-weight: 400;
+        }
+
+        /* Team summary */
+        .team-summary {
+            margin-top: 0.8rem;
+        }
+        .team-bar-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.6rem;
+            gap: 1rem;
+        }
+        .team-bar-label {
+            width: 120px;
+            font-size: 0.75rem;
+            text-align: right;
+            flex-shrink: 0;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6B5B52;
+        }
+        .team-bar-track {
+            flex: 1;
+            height: 22px;
+            display: flex;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .team-bar-segment {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            min-width: 22px;
+            overflow: visible;
+        }
+
+        /* Layer section with inline bar */
+        .layer-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 0.6rem 0;
+        }
+        .layer-header .section-title {
+            margin: 0;
+            width: 200px;
+            min-width: 200px;
+            white-space: nowrap;
+        }
+        .layer-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex: 1;
+        }
+
+        /* Collapsible details */
+        details {
+            margin-bottom: 0.3rem;
+        }
+        details summary {
+            cursor: pointer;
+            list-style: none;
+        }
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+        details summary .layer-header .section-title::before {
+            content: '+ ';
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        details[open] summary .layer-header .section-title::before {
+            content: '- ';
+            color: var(--accent);
+        }
+        details .table-container {
+            margin-top: 0.8rem;
+            padding-left: 0;
+        }
+
+        /* Radar */
+        .radar-wrap {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .radar-wrap svg {
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+        .radar-legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+            padding: 0 0.5rem;
+        }
+        .radar-legend-col h4 {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin: 0 0 0.4rem 0;
+            padding-bottom: 0.25rem;
+            border-bottom: 2px solid currentColor;
+        }
+        .radar-legend-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .radar-legend-col li {
+            font-size: 0.65rem;
+            line-height: 1.5;
+            color: var(--text);
+            display: flex;
+            align-items: baseline;
+            gap: 0.3rem;
+        }
+        .radar-legend-col li .dot-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            min-width: 16px;
+            border-radius: 50%;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .radar-legend-col .ring-label {
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-top: 0.4rem;
+            margin-bottom: 0.15rem;
+        }
+
+        /* Hover */
+        tr:hover td:not(:first-child) {
+            opacity: 0.85;
+        }
+        details summary:hover .section-title {
+            border-left-color: var(--accent-hover);
+            color: var(--heading);
+        }
+
+        /* Footer */
+        .radar-footer {
+            border-top: 1px solid var(--border);
+            padding: 1.5rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+        .radar-footer a {
+            color: var(--muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .radar-footer a:hover {
+            color: var(--text);
+        }
+        .radar-footer .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .radar-footer .footer-right svg {
+            height: 20px;
+            width: auto;
+        }
+        .radar-footer .github-link svg {
+            height: 16px;
+            width: 16px;
+        }
+        .radar-footer .github-link {
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="logo" id="logo-container"></div>
+
+<h1 id="main-title"></h1>
+<p class="subtitle" id="main-subtitle"></p>
+<div class="divider"></div>
+
+<div class="stats" id="stats"></div>
+
+<h2 class="section-heading">Team Radars</h2>
+<div id="team-radars"></div>
+
+<h2 class="section-heading">Practices by Layer</h2>
+<div id="layers"></div>
+
+
+<script>
+const DATA = {
+  "title": "Engineering Practices Radar",
+  "subtitle": "Tracking adoption of engineering standards across streaming platform teams",
+  "logo": "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
+  "teams": ["STREAMING", "CONTENT", "PLATFORM", "DATA", "STUDIO"],
+  "theme": {
+    "background": "#1A1A1A",
+    "text": "#E0E0E0",
+    "heading": "#FFFFFF",
+    "accent": "#E50914",
+    "muted": "#808080",
+    "border": "#333333",
+    "surface": "#252525",
+    "cardBackground": "#2A2A2A",
+    "quadrantColors": ["#E50914", "#B81D24", "#831010", "#564D4D"]
+  },
+  "adoptionLevels": [
+    { "value": 0, "label": "N/A", "color": "#2A2A2A", "textColor": "#555" },
+    { "value": 1, "label": "Not Used", "color": "#444", "textColor": "#999" },
+    { "value": 2, "label": "Emergent", "color": "#B81D24", "textColor": "#fff" },
+    { "value": 3, "label": "Intentional", "color": "#E50914", "textColor": "#fff" }
+  ],
+  "sections": [
+    {
+      "title": "Resilience",
+      "practices": [
+        { "name": "Chaos Engineering", "link": "", "levels": [3, 2, 3, 2, 1] },
+        { "name": "Circuit Breaker", "link": "", "levels": [3, 3, 3, 2, 2] },
+        { "name": "Bulkhead Isolation", "link": "", "levels": [3, 2, 3, 1, 1] },
+        { "name": "Graceful Degradation", "link": "", "levels": [3, 3, 3, 2, 2] },
+        { "name": "Timeout & Retry Policies", "link": "", "levels": [3, 3, 3, 3, 2] }
+      ]
+    },
+    {
+      "title": "Delivery",
+      "practices": [
+        { "name": "Canary Deployments", "link": "", "levels": [3, 3, 3, 3, 2] },
+        { "name": "Feature Flags", "link": "", "levels": [3, 3, 3, 2, 3] },
+        { "name": "Trunk Based Development", "link": "", "levels": [3, 2, 3, 3, 2] },
+        { "name": "Automated Rollback", "link": "", "levels": [3, 2, 3, 2, 1] },
+        { "name": "Immutable Infrastructure", "link": "", "levels": [3, 3, 3, 3, 2] }
+      ]
+    },
+    {
+      "title": "Observability",
+      "practices": [
+        { "name": "Distributed Tracing", "link": "", "levels": [3, 2, 3, 3, 1] },
+        { "name": "Real-Time Dashboards", "link": "", "levels": [3, 3, 3, 3, 2] },
+        { "name": "Anomaly Detection", "link": "", "levels": [2, 2, 3, 3, 1] },
+        { "name": "SLO-Based Alerting", "link": "", "levels": [3, 2, 3, 2, 1] },
+        { "name": "Log Aggregation", "link": "", "levels": [3, 3, 3, 3, 3] }
+      ]
+    },
+    {
+      "title": "Culture",
+      "practices": [
+        { "name": "Freedom & Responsibility", "link": "", "levels": [3, 3, 3, 3, 3] },
+        { "name": "Blameless Post-Mortems", "link": "", "levels": [3, 3, 3, 3, 2] },
+        { "name": "Full Cycle Developers", "link": "", "levels": [3, 2, 3, 2, 1] },
+        { "name": "Documentation as Code", "link": "", "levels": [2, 2, 3, 3, 2] },
+        { "name": "A/B Testing Culture", "link": "", "levels": [3, 3, 2, 3, 2] }
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "text": "Practices under evaluation:",
+      "items": [
+        { "name": "eBPF-Based Observability", "link": "" },
+        { "name": "Service Mesh Adoption", "link": "" }
+      ]
+    }
+  ]
+}
+;
+
+// Apply theme as CSS variables
+(function applyTheme() {
+    const t = DATA.theme;
+    const root = document.documentElement.style;
+    root.setProperty('--bg', t.background);
+    root.setProperty('--text', t.text);
+    root.setProperty('--heading', t.heading);
+    root.setProperty('--accent', t.accent);
+    // Derive a darker accent for hover states
+    const hex = t.accent.replace('#', '');
+    const darken = (h, f) => Math.max(0, Math.round(parseInt(h, 16) * f)).toString(16).padStart(2, '0');
+    root.setProperty('--accent-hover', '#' + darken(hex.slice(0,2), 0.8) + darken(hex.slice(2,4), 0.8) + darken(hex.slice(4,6), 0.8));
+    root.setProperty('--muted', t.muted);
+    root.setProperty('--border', t.border);
+    root.setProperty('--surface', t.surface);
+    root.setProperty('--card-bg', t.cardBackground);
+})();
+
+// Generate dynamic score CSS classes from adoptionLevels
+(function generateScoreStyles() {
+    const style = document.createElement('style');
+    style.textContent = DATA.adoptionLevels.map(l =>
+        `.s${l.value} { background: ${l.color}; color: ${l.textColor}; }`
+    ).join('\n');
+    document.head.appendChild(style);
+})();
+
+// Build adoption level lookup
+const levelByValue = {};
+DATA.adoptionLevels.forEach(l => { levelByValue[l.value] = l; });
+
+// Set title, subtitle, logo
+document.getElementById('main-title').textContent = DATA.title;
+document.getElementById('main-subtitle').textContent = DATA.subtitle;
+if (DATA.logo) {
+    document.getElementById('logo-container').innerHTML =
+        `<img src="${DATA.logo}" alt="Logo" class="logo-img">`;
+}
+
+const teams = DATA.teams;
+const sections = DATA.sections;
+
+// Global counters
+const totalCells = {};
+DATA.adoptionLevels.forEach(l => { totalCells[l.value] = 0; });
+
+sections.forEach(section => {
+    section.practices.forEach(p => {
+        p.levels.forEach(s => { totalCells[s]++; });
+    });
+});
+
+// Stats
+const sortedLevels = DATA.adoptionLevels.slice().sort((a, b) => b.value - a.value);
+const applicable = sortedLevels
+    .filter(l => l.value > 0)
+    .reduce((sum, l) => sum + totalCells[l.value], 0);
+
+const maxLevel = Math.max(...DATA.adoptionLevels.map(l => l.value));
+
+const statsDiv = document.getElementById('stats');
+statsDiv.innerHTML = sortedLevels.map(l =>
+    `<div class="stat-card"><div class="stat-value" style="color:${l.color === '#EEEBE6' || l.color === '#D4C9B8' ? l.textColor : l.color}">${totalCells[l.value]}</div><div class="stat-label">${l.label}</div></div>`
+).join('') + `<div class="stat-card"><div class="stat-value" style="color:${DATA.theme.accent}">${applicable > 0 ? ((sortedLevels.filter(l => l.value > 0).reduce((sum, l) => sum + totalCells[l.value] * l.value, 0) / applicable) * 100 / maxLevel).toFixed(0) : 0}%</div><div class="stat-label">Adoption Rate</div></div>`;
+
+// Team stats
+const teamStats = teams.map((team, ti) => {
+    const counts = {};
+    DATA.adoptionLevels.forEach(l => { counts[l.value] = 0; });
+    sections.forEach(section => {
+        section.practices.forEach(p => {
+            counts[p.levels[ti]]++;
+        });
+    });
+    const app = Object.entries(counts)
+        .filter(([v]) => parseInt(v) > 0)
+        .reduce((sum, [, c]) => sum + c, 0);
+    return { team, counts, applicable: app };
+});
+
+// Team Radars
+const teamRadarsDiv = document.getElementById('team-radars');
+const quadColors = DATA.theme.quadrantColors;
+const ringNames = sortedLevels.map(l => l.label);
+const ringFills = [
+    'rgba(74,124,89,0.10)', 'rgba(196,149,106,0.08)',
+    'rgba(212,201,184,0.08)', 'rgba(238,235,230,0.06)'
+];
+
+function buildRadar(container, teamIdx) {
+    const size = 750;
+    const cx = size / 2, cy = size / 2;
+    const maxR = size / 2 - 45;
+    const numRings = DATA.adoptionLevels.length;
+    const ringR = [];
+    for (let i = 0; i < numRings; i++) {
+        ringR.push(maxR * (0.52 + (i / (numRings - 1)) * 0.44));
+    }
+    const quadCount = sections.length;
+    const dotR = 8;
+
+    const svg = d3.select(container).append('svg')
+        .attr('width', '100%').attr('height', size)
+        .attr('viewBox', `0 0 ${size} ${size}`);
+
+    // Rings (outer to inner)
+    for (let ri = numRings - 1; ri >= 0; ri--) {
+        svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', ringR[ri])
+            .attr('fill', ringFills[ri] || 'rgba(200,200,200,0.05)')
+            .attr('stroke', DATA.theme.border).attr('stroke-width', 0.5);
+    }
+
+    // Quadrant lines
+    for (let qi = 0; qi < quadCount; qi++) {
+        const angle = (qi / quadCount) * Math.PI * 2 - Math.PI / 2;
+        svg.append('line').attr('x1', cx).attr('y1', cy)
+            .attr('x2', cx + Math.cos(angle) * ringR[numRings - 1])
+            .attr('y2', cy + Math.sin(angle) * ringR[numRings - 1])
+            .attr('stroke', DATA.theme.border).attr('stroke-width', 0.5);
+    }
+
+    // Ring labels
+    ringNames.forEach((name, ri) => {
+        const angle = -Math.PI / 2 + 0.06;
+        svg.append('text')
+            .attr('x', cx + Math.cos(angle) * (ringR[ri] - 10))
+            .attr('y', cy + Math.sin(angle) * (ringR[ri] - 10))
+            .attr('font-size', 8).attr('fill', DATA.theme.muted).attr('opacity', 0.5)
+            .attr('font-family', 'Inter,sans-serif').attr('font-weight', 500)
+            .attr('text-anchor', 'start').attr('dominant-baseline', 'middle')
+            .text(name);
+    });
+
+    // Quadrant labels
+    sections.forEach((section, qi) => {
+        const midAngle = ((qi + 0.5) / quadCount) * Math.PI * 2 - Math.PI / 2;
+        const labelR = ringR[numRings - 1] + 22;
+        svg.append('text')
+            .attr('x', cx + Math.cos(midAngle) * labelR)
+            .attr('y', cy + Math.sin(midAngle) * labelR)
+            .attr('font-size', 10).attr('fill', quadColors[qi % quadColors.length])
+            .attr('font-family', 'Inter,sans-serif').attr('font-weight', 700)
+            .attr('text-anchor', 'middle').attr('dominant-baseline', 'middle')
+            .attr('letter-spacing', '0.04em')
+            .text(section.title.toUpperCase());
+    });
+
+    // Collect dots
+    const dots = [];
+    const legend = [];
+    let globalIdx = 1;
+
+    sections.forEach((section, qi) => {
+        const quadLegend = { title: section.title, color: quadColors[qi % quadColors.length], items: [] };
+        const angleStart = (qi / quadCount) * Math.PI * 2 - Math.PI / 2;
+        const angleEnd = ((qi + 1) / quadCount) * Math.PI * 2 - Math.PI / 2;
+        const pad = 0.08;
+
+        // Group practices by ring for this team
+        const byRing = {};
+        DATA.adoptionLevels.forEach(l => { byRing[l.value] = []; });
+        section.practices.forEach(p => {
+            byRing[p.levels[teamIdx]].push(p.name);
+        });
+
+        // Place dots ring by ring
+        sortedLevels.forEach((level, li) => {
+            const score = level.value;
+            const ringIdx = li;
+            const innerR = ringIdx === 0 ? dotR * 2 : ringR[ringIdx - 1] + dotR;
+            const outerR = ringR[ringIdx] - dotR;
+            const practices = byRing[score];
+            if (practices.length === 0) return;
+
+            practices.forEach((name, pi) => {
+                const t = (pi + 0.5) / practices.length;
+                const angle = angleStart + pad + t * (angleEnd - angleStart - pad * 2);
+                const rFrac = practices.length <= 2 ? 0.5 : (pi % 3) / 2.5 * 0.6 + 0.2;
+                const r = innerR + (outerR - innerR) * rFrac;
+
+                const num = globalIdx++;
+                dots.push({
+                    x: cx + Math.cos(angle) * r,
+                    y: cy + Math.sin(angle) * r,
+                    color: quadColors[qi % quadColors.length],
+                    num, name, score, qi, ringIdx,
+                    inactive: score === 0
+                });
+                quadLegend.items.push({ num, name, score });
+            });
+        });
+        legend.push(quadLegend);
+    });
+
+    // d3-force collision resolution
+    const simulation = d3.forceSimulation(dots)
+        .force('collision', d3.forceCollide(dotR + 2))
+        .force('x', d3.forceX(d => d.x).strength(0.7))
+        .force('y', d3.forceY(d => d.y).strength(0.7))
+        .stop();
+
+    for (let i = 0; i < 200; i++) simulation.tick();
+
+    // Clamp dots
+    const clampPad = 0.06;
+    function clampDots() {
+        dots.forEach(d => {
+            const dx = d.x - cx, dy = d.y - cy;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            let angle = Math.atan2(dy, dx);
+
+            const qStart = (d.qi / quadCount) * Math.PI * 2 - Math.PI / 2 + clampPad;
+            const qEnd = ((d.qi + 1) / quadCount) * Math.PI * 2 - Math.PI / 2 - clampPad;
+
+            while (angle < qStart - Math.PI) angle += Math.PI * 2;
+            while (angle > qStart + Math.PI) angle -= Math.PI * 2;
+
+            if (angle < qStart) angle = qStart;
+            if (angle > qEnd) angle = qEnd;
+
+            const ri = d.ringIdx;
+            const minR = ri === 0 ? dotR + 2 : ringR[ri - 1] + dotR + 1;
+            const maxRing = ringR[ri] - dotR - 1;
+            if (dist < minR) dist = minR;
+            if (dist > maxRing) dist = maxRing;
+
+            d.x = cx + Math.cos(angle) * dist;
+            d.y = cy + Math.sin(angle) * dist;
+        });
+    }
+
+    clampDots();
+
+    // Second pass
+    const sim2 = d3.forceSimulation(dots)
+        .force('collision', d3.forceCollide(dotR + 1.5))
+        .force('x', d3.forceX(d => d.x).strength(0.9))
+        .force('y', d3.forceY(d => d.y).strength(0.9))
+        .stop();
+    for (let i = 0; i < 100; i++) sim2.tick();
+
+    clampDots();
+
+    // Tooltip
+    const tooltip = d3.select(container).append('div')
+        .style('position', 'absolute').style('pointer-events', 'none')
+        .style('background', DATA.theme.heading).style('color', '#fff')
+        .style('padding', '4px 8px').style('border-radius', '3px')
+        .style('font-size', '11px').style('font-family', 'Inter,sans-serif')
+        .style('opacity', 0).style('white-space', 'nowrap').style('z-index', 10);
+
+    // Render dots
+    const groups = svg.selectAll('.dot').data(dots).enter().append('g')
+        .style('cursor', 'pointer')
+        .on('mouseover', (e, d) => {
+            tooltip.style('opacity', 1).text(`${d.num}. ${d.name}`);
+            const rect = container.getBoundingClientRect();
+            tooltip.style('left', (e.clientX - rect.left + 10) + 'px')
+                   .style('top', (e.clientY - rect.top - 20) + 'px');
+        })
+        .on('mouseout', () => tooltip.style('opacity', 0));
+
+    groups.append('circle')
+        .attr('cx', d => d.x).attr('cy', d => d.y).attr('r', dotR)
+        .attr('fill', d => d.color).attr('opacity', d => d.inactive ? 0.25 : 0.9)
+        .attr('stroke', '#fff').attr('stroke-width', 1.5);
+
+    groups.append('text')
+        .attr('x', d => d.x).attr('y', d => d.y + 0.5)
+        .attr('font-size', 7).attr('fill', '#fff')
+        .attr('font-family', 'Inter,sans-serif').attr('font-weight', 600)
+        .attr('text-anchor', 'middle').attr('dominant-baseline', 'middle')
+        .text(d => d.num);
+
+    // Build HTML legend
+    const legendDiv = document.createElement('div');
+    legendDiv.className = 'radar-legend-grid';
+
+    legend.forEach(q => {
+        const col = document.createElement('div');
+        col.className = 'radar-legend-col';
+        col.innerHTML = `<h4 style="color:${q.color}">${q.title}</h4>`;
+        const ul = document.createElement('ul');
+
+        const byRing = {};
+        DATA.adoptionLevels.forEach(l => { byRing[l.value] = []; });
+        q.items.forEach(item => byRing[item.score].push(item));
+
+        sortedLevels.forEach(level => {
+            const score = level.value;
+            if (byRing[score].length === 0) return;
+            const label = document.createElement('li');
+            label.className = 'ring-label';
+            label.style.color = level.color === '#EEEBE6' || level.color === '#D4C9B8' ? level.textColor : level.color;
+            label.textContent = level.label;
+            ul.appendChild(label);
+
+            byRing[score].forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span class="dot-num" style="background:${q.color}; opacity:${item.score === 0 ? 0.3 : 0.9}">${item.num}</span><span>${item.name}</span>`;
+                ul.appendChild(li);
+            });
+        });
+
+        col.appendChild(ul);
+        legendDiv.appendChild(col);
+    });
+
+    container.appendChild(legendDiv);
+}
+
+teams.forEach((team, ti) => {
+    const ts = teamStats[ti];
+    const total = ts.applicable;
+
+    const details = document.createElement('details');
+    let barSegments = '';
+    sortedLevels.filter(l => l.value > 0).forEach(l => {
+        const count = ts.counts[l.value];
+        if (count) {
+            const pct = total > 0 ? (count / total * 100) : 0;
+            barSegments += `<div class="team-bar-segment" style="width:${pct}%; background:${l.color}; color:${l.textColor}">${count}</div>`;
+        }
+    });
+
+    details.innerHTML = `
+        <summary>
+            <div class="layer-header">
+                <div class="section-title">${team}</div>
+                <div class="layer-bar">
+                    <div class="team-bar-track">${barSegments}</div>
+                </div>
+            </div>
+        </summary>
+    `;
+
+    const radarContainer = document.createElement('div');
+    radarContainer.className = 'radar-wrap';
+    radarContainer.style.position = 'relative';
+    details.appendChild(radarContainer);
+
+    teamRadarsDiv.appendChild(details);
+
+    let radarBuilt = false;
+    details.addEventListener('toggle', () => {
+        if (details.open && !radarBuilt) {
+            radarBuilt = true;
+            buildRadar(radarContainer, ti);
+        }
+    });
+});
+
+// Practices by Layer
+const layersDiv = document.getElementById('layers');
+
+sections.forEach((section, si) => {
+    let secCounts = {};
+    DATA.adoptionLevels.forEach(l => { secCounts[l.value] = 0; });
+    section.practices.forEach(p => {
+        p.levels.forEach(s => { secCounts[s]++; });
+    });
+    const secTotal = Object.entries(secCounts)
+        .filter(([v]) => parseInt(v) > 0)
+        .reduce((sum, [, c]) => sum + c, 0);
+
+    let barSegments = '';
+    sortedLevels.filter(l => l.value > 0).forEach(l => {
+        const count = secCounts[l.value];
+        if (count) {
+            const pct = secTotal > 0 ? (count / secTotal * 100) : 0;
+            barSegments += `<div class="team-bar-segment" style="width:${pct}%; background:${l.color}; color:${l.textColor}">${count}</div>`;
+        }
+    });
+
+    let tableHTML = `<table><thead><tr><th>Practice</th>`;
+    teams.forEach(t => tableHTML += `<th>${t}</th>`);
+    tableHTML += `</tr></thead><tbody>`;
+
+    section.practices.forEach(p => {
+        const label = p.link ? `<a href="${p.link}" target="_blank" rel="noopener" style="color:var(--text); text-decoration:none; border-bottom:1px solid var(--border);">${p.name}</a>` : p.name;
+        tableHTML += `<tr><td>${label}</td>`;
+        p.levels.forEach(s => {
+            const cellLabel = s === 0 ? '—' : '';
+            tableHTML += `<td class="s${s}">${cellLabel}</td>`;
+        });
+        tableHTML += `</tr>`;
+    });
+    tableHTML += `</tbody></table>`;
+
+    const details = document.createElement('details');
+    details.innerHTML = `
+        <summary>
+            <div class="layer-header">
+                <div class="section-title">${section.title}</div>
+                <div class="layer-bar">
+                    <div class="team-bar-track">${barSegments}</div>
+                </div>
+            </div>
+        </summary>
+        <div class="table-container">${tableHTML}</div>
+    `;
+
+    layersDiv.appendChild(details);
+});
+
+// Notes section
+if (DATA.notes && DATA.notes.length > 0) {
+    let notesHTML = '<h2 class="section-heading">Notes</h2>';
+    notesHTML += '<div style="font-size:0.85rem; line-height:1.7; color:#6B5B52;">';
+    DATA.notes.forEach(note => {
+        notesHTML += `<p>${note.text}</p>`;
+        if (note.items && note.items.length > 0) {
+            notesHTML += '<ul style="margin:0.6rem 0 0 1.2rem; padding:0;">';
+            note.items.forEach(item => {
+                if (item.link) {
+                    notesHTML += `<li><a href="${item.link}" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none; border-bottom:1px solid var(--accent);">${item.name}</a></li>`;
+                } else {
+                    notesHTML += `<li>${item.name}</li>`;
+                }
+            });
+            notesHTML += '</ul>';
+        }
+    });
+    notesHTML += '</div>';
+    document.querySelector('.container').insertAdjacentHTML('beforeend', notesHTML);
+}
+
+</script>
+
+</div><!-- .container -->
+
+<footer class="radar-footer">
+    <a href="https://github.com/defsquare/practice-radar" target="_blank" rel="noopener" class="github-link">
+        <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+        Github
+    </a>
+    <div class="footer-right">
+        <span>Powered by</span>
+        <a href="https://defsquare.io" target="_blank" rel="noopener">
+            <svg width="229px" height="49px" viewBox="0 0 229 49" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <text font-family="Helvetica-Bold, Helvetica" font-size="40" font-weight="bold" fill="currentColor">
+                        <tspan x="19.9140625" y="39">defsquare</tspan>
+                    </text>
+                    <g transform="translate(214, 0)" fill="#F65E5E">
+                        <path d="M15,0 L15,7 L15,48 L15,49 L0,49 L0,42 L8,42 L8,7 L0,7 L0,0 L15,0 Z"></path>
+                    </g>
+                    <g fill="#F65E5E">
+                        <path d="M0,0 L15,0 L15,7 L7,7 L7,42 L15,42 L15,49 L0,49 L0,0 Z"></path>
+                    </g>
+                </g>
+            </svg>
+        </a>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -53,6 +53,14 @@ Default scale (customizable):
 | 2 | Emergent | Partially adopted |
 | 3 | Intentional | Fully adopted |
 
+## Preview
+
+- [Netflix](examples/netflix.html) — dark theme, resilience & chaos engineering focus
+- [Spotify](examples/spotify.html) — green theme, squad autonomy & platform engineering
+- [Anthropic](examples/anthropic.html) — warm theme, AI safety & reliability
+
+Data files are in [`examples/`](examples/).
+
 ## How It Works
 
 `make` injects the contents of `data.json` into `template.html` at the `/** @DATA@ */` placeholder, producing a self-contained `radar.html` file. No server required.

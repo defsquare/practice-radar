@@ -1,0 +1,74 @@
+{
+  "title": "Safety & Engineering Practices Radar",
+  "subtitle": "Assessing the adoption of engineering and AI safety practices across teams",
+  "logo": "https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg",
+  "teams": ["CLAUDE", "INFRASTRUCTURE", "RESEARCH", "TRUST & SAFETY"],
+  "theme": {
+    "background": "#FDFAF6",
+    "text": "#3D3929",
+    "heading": "#1A1A1A",
+    "accent": "#D97706",
+    "muted": "#8A8272",
+    "border": "#E5DFD3",
+    "surface": "#F5F0E8",
+    "cardBackground": "#fff",
+    "quadrantColors": ["#D97706", "#92400E", "#6B7280", "#4A7C59"]
+  },
+  "adoptionLevels": [
+    { "value": 0, "label": "N/A", "color": "#F0EDE6", "textColor": "#B0A898" },
+    { "value": 1, "label": "Planned", "color": "#D5CFC3", "textColor": "#6B6252" },
+    { "value": 2, "label": "In Progress", "color": "#D97706", "textColor": "#fff" },
+    { "value": 3, "label": "Established", "color": "#92400E", "textColor": "#fff" }
+  ],
+  "sections": [
+    {
+      "title": "AI Safety",
+      "practices": [
+        { "name": "Red Teaming", "link": "", "levels": [3, 0, 3, 3] },
+        { "name": "Model Evaluation Suites", "link": "", "levels": [3, 2, 3, 2] },
+        { "name": "Constitutional AI Alignment", "link": "", "levels": [3, 0, 3, 2] },
+        { "name": "Responsible Disclosure", "link": "", "levels": [3, 2, 2, 3] },
+        { "name": "Safety Benchmarking", "link": "", "levels": [3, 1, 3, 3] }
+      ]
+    },
+    {
+      "title": "Engineering",
+      "practices": [
+        { "name": "Code Review", "link": "", "levels": [3, 3, 3, 3] },
+        { "name": "Trunk Based Development", "link": "", "levels": [3, 3, 2, 2] },
+        { "name": "Test-Driven Development", "link": "", "levels": [3, 3, 2, 2] },
+        { "name": "Infrastructure as Code", "link": "", "levels": [2, 3, 1, 2] },
+        { "name": "Continuous Deployment", "link": "", "levels": [3, 3, 2, 2] }
+      ]
+    },
+    {
+      "title": "Reliability",
+      "practices": [
+        { "name": "Incident Response Runbooks", "link": "", "levels": [3, 3, 1, 2] },
+        { "name": "Load Testing", "link": "", "levels": [3, 3, 1, 0] },
+        { "name": "SLO-Based Monitoring", "link": "", "levels": [3, 3, 1, 2] },
+        { "name": "Graceful Degradation", "link": "", "levels": [3, 3, 0, 1] },
+        { "name": "Capacity Planning", "link": "", "levels": [3, 3, 2, 0] }
+      ]
+    },
+    {
+      "title": "Security",
+      "practices": [
+        { "name": "Zero Trust Architecture", "link": "", "levels": [2, 3, 2, 3] },
+        { "name": "Dependency Scanning", "link": "", "levels": [3, 3, 2, 3] },
+        { "name": "Secret Management", "link": "", "levels": [3, 3, 3, 3] },
+        { "name": "Access Control Reviews", "link": "", "levels": [2, 3, 2, 3] },
+        { "name": "Audit Logging", "link": "", "levels": [3, 3, 2, 3] }
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "text": "Practices under active research:",
+      "items": [
+        { "name": "Interpretability Tooling", "link": "" },
+        { "name": "Automated Safety Testing in CI", "link": "" }
+      ]
+    }
+  ]
+}
