@@ -28,7 +28,9 @@
         }
         .logo-img {
             height: 80px;
+            max-width: 100%;
             width: auto;
+            object-fit: contain;
         }
         h1 {
             font-family: 'Playfair Display', Georgia, serif;
@@ -230,6 +232,8 @@
         details .table-container {
             margin-top: 0.8rem;
             padding-left: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         /* Radar */
@@ -338,6 +342,70 @@
             text-transform: uppercase;
             letter-spacing: 0.06em;
             font-size: 0.7rem;
+        }
+        /* Mobile */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+            h1 {
+                font-size: 1.4rem;
+                letter-spacing: 0.08em;
+            }
+            .subtitle {
+                font-size: 0.78rem;
+                margin-bottom: 1.5rem;
+            }
+            .stats {
+                gap: 0.8rem;
+            }
+            .stat-card {
+                padding: 0.8rem 1.2rem;
+                min-width: 100px;
+            }
+            .stat-value {
+                font-size: 1.4rem;
+            }
+            table {
+                table-layout: auto;
+                min-width: 600px;
+            }
+            th:first-child {
+                width: 180px;
+            }
+            th {
+                font-size: 0.6rem;
+                padding: 0.5rem 0.3rem;
+            }
+            td {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.3rem;
+            }
+            .team-bar-label {
+                width: 80px;
+                font-size: 0.65rem;
+            }
+            .layer-header .section-title {
+                width: auto;
+                min-width: auto;
+                font-size: 0.72rem;
+            }
+            .layer-header {
+                gap: 0.5rem;
+            }
+            .layer-bar {
+                gap: 0.4rem;
+            }
+            .radar-footer {
+                flex-direction: column;
+                gap: 0.8rem;
+                padding: 1rem;
+                text-align: center;
+            }
+            .radar-legend-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 0.8rem;
+            }
         }
     </style>
 </head>
