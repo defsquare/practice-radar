@@ -6,9 +6,9 @@ A standalone HTML radar to visualize how engineering practices are adopted acros
 
 ## Preview
 
-- [Netflix](https://defsquare.github.io/practice-radar/examples/netflix.html) — dark theme, resilience & chaos engineering focus
-- [Spotify](https://defsquare.github.io/practice-radar/examples/spotify.html) — green theme, squad autonomy & platform engineering
-- [Anthropic](https://defsquare.github.io/practice-radar/examples/anthropic.html) — warm theme, AI safety & reliability
+- [Netflix](https://defsquare.github.io/practice-radar/examples/netflix.html): dark theme, resilience & chaos engineering focus
+- [Spotify](https://defsquare.github.io/practice-radar/examples/spotify.html): green theme, squad autonomy & platform engineering
+- [Anthropic](https://defsquare.github.io/practice-radar/examples/anthropic.html): warm theme, AI safety & reliability
 
 Data files are in [`examples/`](examples/).
 
@@ -38,34 +38,38 @@ make DATA=examples/netflix.json
 
 `data.json` contains all your configuration:
 
-| Field | Description |
-|---|---|
-| `title` | Main heading displayed at the top |
-| `subtitle` | Description below the title |
-| `logo` | URL to a logo image (leave empty to hide) |
-| `teams` | Array of team names (column headers) |
-| `theme` | Colors for background, text, accent, borders, quadrants, etc. |
+| Field            | Description                                                              |
+|------------------|--------------------------------------------------------------------------|
+| `title`          | Main heading displayed at the top                                        |
+| `subtitle`       | Description below the title                                              |
+| `logo`           | URL to a logo image (leave empty to hide)                                |
+| `teams`          | Array of team names (column headers)                                     |
+| `theme`          | Colors for background, text, accent, borders, quadrants, etc.            |
 | `adoptionLevels` | Colors for each fixed level (`na`, `notUsed`, `emergent`, `intentional`) |
-| `sections` | Practice groups (become radar quadrants) |
-| `notes` | Optional notes displayed at the bottom |
+| `sections`       | Practice groups (become radar quadrants)                                 |
+| `notes`          | Optional notes displayed at the bottom                                   |
 
 ### Practices
 
 Each practice has:
-- `name` — display name
-- `link` — URL to documentation (optional, leave empty string)
-- `levels` — array of scores, one per team, matching `adoptionLevels` values
+- `name`: display name
+- `link`: URL to documentation (optional, leave empty string)
+- `levels`: array of scores, one per team, matching `adoptionLevels` values
 
 ### Adoption Levels
 
-The four levels are fixed — only their `color` and `textColor` are customizable:
+The radar uses a fixed 4-level scale designed to capture where each team stands on a practice adoption journey; from not applicable, through awareness without action, to deliberate and consistent use. These levels are not arbitrary: they reflect a progression model where the key inflection point is the shift from knowing about a practice to actively applying it.
 
-| Value | Key | Label | Meaning |
-|---|---|---|---|
-| 0 | `na` | N/A | Not applicable to this team |
-| 1 | `notUsed` | Not Used | Known but not adopted |
-| 2 | `emergent` | Emergent | Partially adopted |
-| 3 | `intentional` | Intentional | Fully adopted |
+Only `color` and `textColor` are customizable per level:
+
+| Value | Key           | Label       | Meaning                                                            |
+|-------|---------------|-------------|--------------------------------------------------------------------|
+| 0     | `na`          | N/A         | Practice does not apply to this team's context                     |
+| 1     | `notUsed`     | Not Used    | Practice is known but not adopted, counts against adoption rate    |
+| 2     | `emergent`    | Emergent    | Practice is being adopted, usage is growing but not yet consistent |
+| 3     | `intentional` | Intentional | Practice is deliberately and consistently applied                  |
+
+The **Adoption Rate** is the percentage of applicable practices (excluding N/A) that have reached at least Emergent level. A "Not Used" score actively lowers the rate, reflecting that awareness without action is not adoption.
 
 ## How It Works
 
