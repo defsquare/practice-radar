@@ -1,0 +1,67 @@
+{
+  "title": "Practices Radar",
+  "subtitle": "Assessing how standards align with actual team practices",
+  "logo": "",
+  "teams": ["ALPHA", "BETA", "GAMMA"],
+  "theme": {
+    "background": "#FAF8F5",
+    "text": "#3B2F2F",
+    "heading": "#1A1A1A",
+    "accent": "#E8630A",
+    "muted": "#8C7B75",
+    "border": "#D6CCC2",
+    "surface": "#F0EBE5",
+    "cardBackground": "#fff",
+    "quadrantColors": ["#4A7C59", "#C4956A", "#7B6B8D", "#8B6F5C"]
+  },
+  "adoptionLevels": [
+    { "value": 0, "label": "N/A", "color": "#EEEBE6", "textColor": "#B8AFA6" },
+    { "value": 1, "label": "Not Used", "color": "#D4C9B8", "textColor": "#6B5B52" },
+    { "value": 2, "label": "Emergent", "color": "#C4956A", "textColor": "#fff" },
+    { "value": 3, "label": "Intentional", "color": "#4A7C59", "textColor": "#fff" }
+  ],
+  "sections": [
+    {
+      "title": "Engineering",
+      "practices": [
+        { "name": "Code Review", "link": "", "levels": [3, 3, 2] },
+        { "name": "Continuous Integration", "link": "", "levels": [3, 2, 3] },
+        { "name": "Test-Driven Development", "link": "", "levels": [2, 1, 2] },
+        { "name": "Pair Programming", "link": "", "levels": [1, 2, 1] }
+      ]
+    },
+    {
+      "title": "Architecture",
+      "practices": [
+        { "name": "Clean Architecture", "link": "", "levels": [3, 3, 3] },
+        { "name": "Event-Driven Design", "link": "", "levels": [2, 3, 1] },
+        { "name": "API Documentation", "link": "", "levels": [3, 2, 2] }
+      ]
+    },
+    {
+      "title": "Operations",
+      "practices": [
+        { "name": "Monitoring", "link": "", "levels": [3, 3, 2] },
+        { "name": "Alerting", "link": "", "levels": [2, 3, 1] },
+        { "name": "Runbooks", "link": "", "levels": [1, 2, 1] }
+      ]
+    },
+    {
+      "title": "Security",
+      "practices": [
+        { "name": "Dependency Scanning", "link": "", "levels": [3, 2, 2] },
+        { "name": "Secret Management", "link": "", "levels": [3, 3, 3] },
+        { "name": "Input Validation", "link": "", "levels": [2, 2, 1] }
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "text": "The following practices have not yet been assessed:",
+      "items": [
+        { "name": "Chaos Engineering", "link": "" },
+        { "name": "Feature Flags", "link": "" }
+      ]
+    }
+  ]
+}
