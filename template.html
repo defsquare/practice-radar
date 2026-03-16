@@ -155,6 +155,57 @@
             color: var(--muted);
             margin-top: 0.3rem;
             text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .info-icon {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 1px solid var(--muted);
+            font-size: 0.5rem;
+            font-weight: 600;
+            cursor: help;
+            text-transform: none;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .info-icon:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .info-icon .info-tooltip {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 8px);
+            right: -10px;
+            background: var(--heading);
+            color: var(--bg);
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 400;
+            white-space: normal;
+            width: 200px;
+            text-align: center;
+            text-transform: none;
+            letter-spacing: 0;
+            z-index: 10;
+        }
+        .info-icon .info-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 12px;
+            border: 5px solid transparent;
+            border-top-color: var(--heading);
+        }
+        .info-icon:hover .info-tooltip {
+            display: block;
             letter-spacing: 0.06em;
             font-weight: 400;
         }
@@ -506,7 +557,7 @@ const maxLevel = Math.max(...DATA.adoptionLevels.map(l => l.value));
 const statsDiv = document.getElementById('stats');
 statsDiv.innerHTML = sortedLevels.map(l =>
     `<div class="stat-card"><div class="stat-value" style="color:${l.color === '#EEEBE6' || l.color === '#D4C9B8' ? l.textColor : l.color}">${totalCells[l.value]}</div><div class="stat-label">${l.label}</div></div>`
-).join('') + `<div class="stat-card"><div class="stat-value" style="color:${DATA.theme.accent}">${applicable > 0 ? ((sortedLevels.filter(l => l.value > 0).reduce((sum, l) => sum + totalCells[l.value] * l.value, 0) / applicable) * 100 / maxLevel).toFixed(0) : 0}%</div><div class="stat-label">Adoption Rate</div></div>`;
+).join('') + `<div class="stat-card"><div class="stat-value" style="color:${DATA.theme.accent}">${applicable > 0 ? (sortedLevels.filter(l => l.value >= 2).reduce((sum, l) => sum + totalCells[l.value], 0) / applicable * 100).toFixed(0) : 0}%</div><div class="stat-label">Adoption Rate <span class="info-icon">?<span class="info-tooltip">% of practices at least started (N/A excluded)</span></span></div></div>`;
 
 // Team stats
 const teamStats = teams.map((team, ti) => {
