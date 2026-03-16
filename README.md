@@ -4,6 +4,14 @@ A standalone HTML radar to visualize how engineering practices are adopted acros
 
 ![Screenshot](https://img.shields.io/badge/output-single%20HTML%20file-blue)
 
+## Preview
+
+- [Netflix](https://defsquare.github.io/practice-radar/examples/netflix.html) — dark theme, resilience & chaos engineering focus
+- [Spotify](https://defsquare.github.io/practice-radar/examples/spotify.html) — green theme, squad autonomy & platform engineering
+- [Anthropic](https://defsquare.github.io/practice-radar/examples/anthropic.html) — warm theme, AI safety & reliability
+
+Data files are in [`examples/`](examples/).
+
 ## Quick Start
 
 1. Copy the example data file and edit it with your own teams, practices, and scores:
@@ -52,14 +60,6 @@ Default scale (customizable):
 | 1 | Not Used | Known but not adopted |
 | 2 | Emergent | Partially adopted |
 | 3 | Intentional | Fully adopted |
-
-## Preview
-
-- [Netflix](examples/netflix.html) — dark theme, resilience & chaos engineering focus
-- [Spotify](examples/spotify.html) — green theme, squad autonomy & platform engineering
-- [Anthropic](examples/anthropic.html) — warm theme, AI safety & reliability
-
-Data files are in [`examples/`](examples/).
 
 ## How It Works
 
