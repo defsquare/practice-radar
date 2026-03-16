@@ -26,6 +26,12 @@ cp data.example.json data.json
 make
 ```
 
+Or build from a specific data file:
+
+```bash
+make DATA=examples/netflix.json
+```
+
 3. Open `radar.html` in your browser.
 
 ## Data Format
