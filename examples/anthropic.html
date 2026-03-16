@@ -509,7 +509,7 @@ const DATA = {
   },
   "adoptionLevels": {
     "na":          { "color": "#F0EDE6", "textColor": "#B0A898" },
-    "notUsed":     { "color": "#D5CFC3", "textColor": "#6B6252" },
+    "aware":       { "color": "#D5CFC3", "textColor": "#6B6252" },
     "emergent":    { "color": "#D97706", "textColor": "#fff" },
     "intentional": { "color": "#92400E", "textColor": "#fff" }
   },
@@ -587,10 +587,10 @@ const DATA = {
 
 // Fixed adoption levels — only colors are customizable via data
 const LEVELS = [
-    { value: 0, label: 'N/A',         key: 'na',          ...LEVELS.na },
-    { value: 1, label: 'Not Used',     key: 'notUsed',     ...LEVELS.notUsed },
-    { value: 2, label: 'Emergent',     key: 'emergent',    ...LEVELS.emergent },
-    { value: 3, label: 'Intentional',  key: 'intentional', ...LEVELS.intentional }
+    { value: 0, label: 'N/A',         key: 'na',          hint: 'Practice does not apply to this team',                          ...DATA.adoptionLevels.na },
+    { value: 1, label: 'Aware',       key: 'aware',       hint: 'Practice is known but not yet adopted',                         ...DATA.adoptionLevels.aware },
+    { value: 2, label: 'Emergent',    key: 'emergent',    hint: 'Practice is being adopted, usage is growing',                   ...DATA.adoptionLevels.emergent },
+    { value: 3, label: 'Intentional', key: 'intentional', hint: 'Practice is deliberately and consistently applied',             ...DATA.adoptionLevels.intentional }
 ];
 
 // Generate dynamic score CSS classes
@@ -609,7 +609,7 @@ LEVELS.forEach(l => { levelByValue[l.value] = l; });
 // Set title, subtitle, logo
 document.getElementById('main-title').textContent = DATA.title;
 document.getElementById('main-subtitle').textContent = DATA.subtitle;
-document.getElementById('generated-at').textContent = 'Generated at ' + 'March 16, 2026 at 20:38:53';
+document.getElementById('generated-at').textContent = 'Generated at ' + 'March 16, 2026 at 20:59:29';
 if (DATA.logo) {
     document.getElementById('logo-container').innerHTML =
         `<img src="${DATA.logo}" alt="Logo" class="logo-img">`;
@@ -638,7 +638,7 @@ const maxLevel = Math.max(...LEVELS.map(l => l.value));
 
 const statsDiv = document.getElementById('stats');
 statsDiv.innerHTML = sortedLevels.map(l =>
-    `<div class="stat-card"><div class="stat-value" style="color:${l.color === '#EEEBE6' || l.color === '#D4C9B8' ? l.textColor : l.color}">${totalCells[l.value]}</div><div class="stat-label">${l.label}</div></div>`
+    `<div class="stat-card"><div class="stat-value" style="color:${l.color === '#EEEBE6' || l.color === '#D4C9B8' ? l.textColor : l.color}">${totalCells[l.value]}</div><div class="stat-label">${l.label} <span class="info-icon">?<span class="info-tooltip">${l.hint}</span></span></div></div>`
 ).join('') + `<div class="stat-card"><div class="stat-value" style="color:${DATA.theme.accent}">${applicable > 0 ? (sortedLevels.filter(l => l.value >= 2).reduce((sum, l) => sum + totalCells[l.value], 0) / applicable * 100).toFixed(0) : 0}%</div><div class="stat-label">Adoption Rate <span class="info-icon">?<span class="info-tooltip">% of practices at least started (N/A excluded)</span></span></div></div>`;
 
 // Team stats

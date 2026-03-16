@@ -513,10 +513,10 @@ const DATA = /** @DATA@ */;
 
 // Fixed adoption levels — only colors are customizable via data
 const LEVELS = [
-    { value: 0, label: 'N/A',         key: 'na',          ...DATA.adoptionLevels.na },
-    { value: 1, label: 'Aware',       key: 'aware',       ...DATA.adoptionLevels.aware },
-    { value: 2, label: 'Emergent',    key: 'emergent',    ...DATA.adoptionLevels.emergent },
-    { value: 3, label: 'Intentional', key: 'intentional', ...DATA.adoptionLevels.intentional }
+    { value: 0, label: 'N/A',         key: 'na',          hint: 'Practice does not apply to this team',                          ...DATA.adoptionLevels.na },
+    { value: 1, label: 'Aware',       key: 'aware',       hint: 'Practice is known but not yet adopted',                         ...DATA.adoptionLevels.aware },
+    { value: 2, label: 'Emergent',    key: 'emergent',    hint: 'Practice is being adopted, usage is growing',                   ...DATA.adoptionLevels.emergent },
+    { value: 3, label: 'Intentional', key: 'intentional', hint: 'Practice is deliberately and consistently applied',             ...DATA.adoptionLevels.intentional }
 ];
 
 // Generate dynamic score CSS classes
@@ -564,7 +564,7 @@ const maxLevel = Math.max(...LEVELS.map(l => l.value));
 
 const statsDiv = document.getElementById('stats');
 statsDiv.innerHTML = sortedLevels.map(l =>
-    `<div class="stat-card"><div class="stat-value" style="color:${l.color === '#EEEBE6' || l.color === '#D4C9B8' ? l.textColor : l.color}">${totalCells[l.value]}</div><div class="stat-label">${l.label}</div></div>`
+    `<div class="stat-card"><div class="stat-value" style="color:${l.color === '#EEEBE6' || l.color === '#D4C9B8' ? l.textColor : l.color}">${totalCells[l.value]}</div><div class="stat-label">${l.label} <span class="info-icon">?<span class="info-tooltip">${l.hint}</span></span></div></div>`
 ).join('') + `<div class="stat-card"><div class="stat-value" style="color:${DATA.theme.accent}">${applicable > 0 ? (sortedLevels.filter(l => l.value >= 2).reduce((sum, l) => sum + totalCells[l.value], 0) / applicable * 100).toFixed(0) : 0}%</div><div class="stat-label">Adoption Rate <span class="info-icon">?<span class="info-tooltip">% of practices at least started (N/A excluded)</span></span></div></div>`;
 
 // Team stats
