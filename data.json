@@ -16,7 +16,7 @@
   },
   "adoptionLevels": {
     "na":          { "color": "#EEEBE6", "textColor": "#B8AFA6" },
-    "notUsed":     { "color": "#D4C9B8", "textColor": "#6B5B52" },
+    "aware":       { "color": "#D4C9B8", "textColor": "#6B5B52" },
     "emergent":    { "color": "#C4956A", "textColor": "#fff" },
     "intentional": { "color": "#4A7C59", "textColor": "#fff" }
   },

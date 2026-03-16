@@ -45,7 +45,7 @@ make DATA=examples/netflix.json
 | `logo`           | URL to a logo image (leave empty to hide)                                |
 | `teams`          | Array of team names (column headers)                                     |
 | `theme`          | Colors for background, text, accent, borders, quadrants, etc.            |
-| `adoptionLevels` | Colors for each fixed level (`na`, `notUsed`, `emergent`, `intentional`) |
+| `adoptionLevels` | Colors for each fixed level (`na`, `aware`, `emergent`, `intentional`) |
 | `sections`       | Practice groups (become radar quadrants)                                 |
 | `notes`          | Optional notes displayed at the bottom                                   |
 
@@ -65,11 +65,11 @@ Only `color` and `textColor` are customizable per level:
 | Value | Key           | Label       | Meaning                                                            |
 |-------|---------------|-------------|--------------------------------------------------------------------|
 | 0     | `na`          | N/A         | Practice does not apply to this team's context                     |
-| 1     | `notUsed`     | Not Used    | Practice is known but not adopted, counts against adoption rate    |
+| 1     | `aware`       | Aware       | Practice is known but not adopted, counts against adoption rate    |
 | 2     | `emergent`    | Emergent    | Practice is being adopted, usage is growing but not yet consistent |
 | 3     | `intentional` | Intentional | Practice is deliberately and consistently applied                  |
 
-The **Adoption Rate** is the percentage of applicable practices (excluding N/A) that have reached at least Emergent level. A "Not Used" score actively lowers the rate, reflecting that awareness without action is not adoption.
+The **Adoption Rate** is the percentage of applicable practices (excluding N/A) that have reached at least Emergent level. An "Aware" score actively lowers the rate, reflecting that awareness without action is not adoption.
 
 ## How It Works
 

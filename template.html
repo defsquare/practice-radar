@@ -513,10 +513,10 @@ const DATA = /** @DATA@ */;
 
 // Fixed adoption levels — only colors are customizable via data
 const LEVELS = [
-    { value: 0, label: 'N/A',         key: 'na',          ...LEVELS.na },
-    { value: 1, label: 'Not Used',     key: 'notUsed',     ...LEVELS.notUsed },
-    { value: 2, label: 'Emergent',     key: 'emergent',    ...LEVELS.emergent },
-    { value: 3, label: 'Intentional',  key: 'intentional', ...LEVELS.intentional }
+    { value: 0, label: 'N/A',         key: 'na',          ...DATA.adoptionLevels.na },
+    { value: 1, label: 'Aware',       key: 'aware',       ...DATA.adoptionLevels.aware },
+    { value: 2, label: 'Emergent',    key: 'emergent',    ...DATA.adoptionLevels.emergent },
+    { value: 3, label: 'Intentional', key: 'intentional', ...DATA.adoptionLevels.intentional }
 ];
 
 // Generate dynamic score CSS classes
