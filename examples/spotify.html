@@ -609,7 +609,7 @@ LEVELS.forEach(l => { levelByValue[l.value] = l; });
 // Set title, subtitle, logo
 document.getElementById('main-title').textContent = DATA.title;
 document.getElementById('main-subtitle').textContent = DATA.subtitle;
-document.getElementById('generated-at').textContent = 'Generated at ' + 'March 16, 2026 at 20:59:29';
+document.getElementById('generated-at').textContent = 'Generated at ' + 'March 17, 2026 at 14:05:32';
 if (DATA.logo) {
     document.getElementById('logo-container').innerHTML =
         `<img src="${DATA.logo}" alt="Logo" class="logo-img">`;
@@ -650,10 +650,11 @@ const teamStats = teams.map((team, ti) => {
             counts[p.levels[ti]]++;
         });
     });
+    const total = Object.values(counts).reduce((sum, c) => sum + c, 0);
     const app = Object.entries(counts)
         .filter(([v]) => parseInt(v) > 0)
         .reduce((sum, [, c]) => sum + c, 0);
-    return { team, counts, applicable: app };
+    return { team, counts, total, applicable: app };
 });
 
 // Team Radars
@@ -889,14 +890,13 @@ function buildRadar(container, teamIdx) {
 
 teams.forEach((team, ti) => {
     const ts = teamStats[ti];
-    const total = ts.applicable;
 
     const details = document.createElement('details');
     let barSegments = '';
-    sortedLevels.filter(l => l.value > 0).forEach(l => {
+    sortedLevels.forEach(l => {
         const count = ts.counts[l.value];
         if (count) {
-            const pct = total > 0 ? (count / total * 100) : 0;
+            const pct = ts.total > 0 ? (count / ts.total * 100) : 0;
             barSegments += `<div class="team-bar-segment" style="width:${pct}%; background:${l.color}; color:${l.textColor}">${count}</div>`;
         }
     });
@@ -937,12 +937,10 @@ sections.forEach((section, si) => {
     section.practices.forEach(p => {
         p.levels.forEach(s => { secCounts[s]++; });
     });
-    const secTotal = Object.entries(secCounts)
-        .filter(([v]) => parseInt(v) > 0)
-        .reduce((sum, [, c]) => sum + c, 0);
+    const secTotal = Object.values(secCounts).reduce((sum, c) => sum + c, 0);
 
     let barSegments = '';
-    sortedLevels.filter(l => l.value > 0).forEach(l => {
+    sortedLevels.forEach(l => {
         const count = secCounts[l.value];
         if (count) {
             const pct = secTotal > 0 ? (count / secTotal * 100) : 0;
